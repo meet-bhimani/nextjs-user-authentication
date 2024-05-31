@@ -56,6 +56,7 @@ export default function SignUpPage() {
 						value={user.username}
 						onChange={handleChange}
 						placeholder="username"
+						required
 					/>
 				</div>
 
@@ -68,6 +69,7 @@ export default function SignUpPage() {
 						value={user.email}
 						onChange={handleChange}
 						placeholder="email"
+						required
 					/>
 				</div>
 
@@ -80,6 +82,7 @@ export default function SignUpPage() {
 						value={user.password}
 						onChange={handleChange}
 						placeholder="password"
+						required
 					/>
 				</div>
 

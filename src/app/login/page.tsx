@@ -57,6 +57,7 @@ export default function LoginPage() {
 						value={user.email}
 						onChange={handleChange}
 						placeholder="email"
+						required
 					/>
 				</div>
 
@@ -69,6 +70,7 @@ export default function LoginPage() {
 						value={user.password}
 						onChange={handleChange}
 						placeholder="password"
+						required
 					/>
 				</div>
 
