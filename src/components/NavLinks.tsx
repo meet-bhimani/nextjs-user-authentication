@@ -1,12 +1,12 @@
-"use client"
-
-import { revalidatePath } from "next/cache"
+import { useAuth } from "@/contexts/userAuthContext"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 
 export default function NavLinks({ userAuth }: { userAuth: boolean }) {
 	const router = useRouter()
+	const { logout } = useAuth()
+	const pathname = usePathname()
 
 	const publicLinks = [
 		{
@@ -40,7 +40,7 @@ export default function NavLinks({ userAuth }: { userAuth: boolean }) {
 
 			if (data.success) {
 				toast.success("Logout successful")
-				// revalidatePath("/")
+				logout()
 				router.push("/login")
 			} else {
 				throw new Error(data.error)
@@ -57,7 +57,9 @@ export default function NavLinks({ userAuth }: { userAuth: boolean }) {
 				{publicLinks.map((linkObj) => {
 					return (
 						<li key={linkObj.text}>
-							<Link href={linkObj.slug}>{linkObj.text}</Link>
+							<Link href={linkObj.slug} className={`${pathname === linkObj.slug ? "text-gray-50" : "text-gray-400"}`}>
+								{linkObj.text}
+							</Link>
 						</li>
 					)
 				})}
@@ -65,18 +67,30 @@ export default function NavLinks({ userAuth }: { userAuth: boolean }) {
 					? authorizedUserLinks.map((linkObj) => {
 							return (
 								<li key={linkObj.text}>
-									<Link href={linkObj.slug}>{linkObj.text}</Link>
+									<Link
+										href={linkObj.slug}
+										className={`${pathname === linkObj.slug ? "text-gray-50" : "text-gray-400"}`}>
+										{linkObj.text}
+									</Link>
 								</li>
 							)
 					  })
 					: unauthorizedUserLinks.map((linkObj) => {
 							return (
 								<li key={linkObj.text}>
-									<Link href={linkObj.slug}>{linkObj.text}</Link>
+									<Link
+										href={linkObj.slug}
+										className={`${pathname === linkObj.slug ? "text-gray-50" : "text-gray-400"}`}>
+										{linkObj.text}
+									</Link>
 								</li>
 							)
 					  })}
-				{userAuth && <button onClick={handleLogout}>Logout</button>}
+				{userAuth && (
+					<button onClick={handleLogout} className="text-gray-400">
+						Logout
+					</button>
+				)}
 			</ul>
 		</nav>
 	)

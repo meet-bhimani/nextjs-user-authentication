@@ -1,5 +1,6 @@
 "use client"
 
+import { useAuth } from "@/contexts/userAuthContext"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, FormEvent, useState } from "react"
@@ -13,6 +14,7 @@ export default function LoginPage() {
 	})
 	const [loading, setLoading] = useState(false)
 	const router = useRouter()
+	const { login } = useAuth()
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -31,6 +33,7 @@ export default function LoginPage() {
 			if (data.success) {
 				toast.success("Login successful")
 				setUser({ email: "", password: "" })
+				login()
 				router.push("/profile")
 			} else {
 				throw new Error(data.error)

@@ -4,6 +4,7 @@ import "./globals.css"
 import { twMerge } from "tailwind-merge"
 import { Toaster } from "react-hot-toast"
 import Navbar from "@/components/Navbar"
+import { AuthProvider } from "@/contexts/userAuthContext"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -20,9 +21,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={twMerge("bg-slate-100", inter.className)}>
-				<Navbar />
-				{children}
-				<Toaster position="top-center" />
+				<AuthProvider>
+					<Navbar />
+					{children}
+					<Toaster position="top-center" />
+				</AuthProvider>
 			</body>
 		</html>
 	)
